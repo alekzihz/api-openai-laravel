@@ -14,13 +14,14 @@ class OpenAiController extends Controller
     {
 
         //$message = $request->input('message');
-
         $message = $request->json()->get('message');
         if (!$message) {
             return response()->json(['message' => 'Please provide a message']);
         }
 
-        $openaiKey = env('OPENAI_KEY');
+        $openaiKey = config("openai.api_key");
+
+
 
         try {
             $client = OpenAI::client($openaiKey);
