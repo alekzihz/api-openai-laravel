@@ -392,14 +392,12 @@
 
 <body class="antialiased">
     <div
-
         class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
         @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-            <a href="{{ url('/logout') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">logout</a>
+            <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
             @else
-            <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
             @if (Route::has('register'))
             <a href="{{ route('register') }}"
@@ -413,8 +411,36 @@
             <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                 <h1>Anunzia OPENAI</h1>
             </div>
+
+
+            <form method="post" action="{{ route('login.submit') }}">
+                @csrf
+                <div class="mt-6 bg-white dark:bg-gray-800 overflow-hidden shadow ">
+                    <div class="grid grid-cols-1">
+                        <input type="text" name="email" id="email" placeholder="usuario">
+                    </div>
+                </div>
+                <br>
+
+                <div class="mt-6 bg-white dark:bg-gray-800 overflow-hidden shadow ">
+                    <div class="grid grid-cols-1">
+                        <input type="password" name="password" id="password" placeholder="contraseña">
+                    </div>
+                </div>
+
+                <br>
+                <div class="mt-6 bg-white dark:bg-gray-800 overflow-hidden shadow ">
+                    <div class="grid grid-cols-1">
+                        <button type="submit">Enviar</button>
+                    </div>
+                </div>
+            </form>
+
+
         </div>
     </div>
+
+
     </div>
 </body>
 

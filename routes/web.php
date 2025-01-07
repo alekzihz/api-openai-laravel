@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +17,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+
+
+/*Route::get('/', function () {
     return view('welcome');
+});*/
+
+Route::get('/dashboard', function () {
+    return view('welcome');
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+Route::get('/logout', function () {
+    Auth::logout();
+    //request()->session()->invalidate();            // Invalida la sesión actual
+    //request()->session()->regenerateToken();       // Regenera el token CSRF
+    return redirect('/login');
 });
+
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
