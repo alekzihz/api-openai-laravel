@@ -41,11 +41,6 @@ class LoginController extends Controller
         return response()->json(['message' => 'Login failed']);
 
 
-
-
-
-
-
         //$password = $credentials['password'];
 
 

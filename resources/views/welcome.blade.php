@@ -391,19 +391,16 @@
 </head>
 
 <body class="antialiased">
-    <div
-
-        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
         @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-            <a href="{{ url('/logout') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">logout</a>
+            <a href="{{ url('/logout') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Logout</a>
             @else
             <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
             @if (Route::has('register'))
-            <a href="{{ route('register') }}"
-                class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
             @endif
             @endauth
         </div>
@@ -413,8 +410,29 @@
             <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                 <h1>Anunzia OPENAI</h1>
             </div>
+
+            <!-- Sección para listar los dominios y su estado -->
+            <div class="mt-8">
+                @if(isset($dominios) && $dominios->count())
+                @foreach($dominios as $dominio)
+                <div class="mb-4 p-4 border rounded">
+                    <p><strong>Dominio:</strong> {{ $dominio->nombre_dominio }}</p>
+                    <p>
+                        <strong>Estado:</strong>
+                        @if($dominio->actiu)
+                        <span class="text-green-600">Activo</span>
+                        @else
+                        <span class="text-red-600">Inactivo</span>
+                        @endif
+                    </p>
+                    <hr>
+                </div>
+                @endforeach
+                @else
+                <p>No hay dominios disponibles.</p>
+                @endif
+            </div>
         </div>
-    </div>
     </div>
 </body>
 
