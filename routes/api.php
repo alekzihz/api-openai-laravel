@@ -19,7 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/openai', [OpenAiController::class, 'chat']);
+//Route::post('/openai', [OpenAiController::class, 'chat']);
+Route::middleware('check.domain')->post('/openai', [OpenAiController::class, 'chat']);
+
 Route::get('/hola', function () {
     return response()->json(['message' => 'Hola Mundo']);
 });
