@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Anunzia OPENAI</title>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    >
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -282,7 +286,7 @@
             grid-template-columns: repeat(1, minmax(0, 1fr))
         }
 
-        @media (min-width:640px) {
+        @media (min-width: 640px) {
             .sm\:rounded-lg {
                 border-radius: .5rem
             }
@@ -329,7 +333,7 @@
             }
         }
 
-        @media (min-width:768px) {
+        @media (min-width: 768px) {
             .md\:border-t-0 {
                 border-top-width: 0
             }
@@ -343,14 +347,14 @@
             }
         }
 
-        @media (min-width:1024px) {
+        @media (min-width: 1024px) {
             .lg\:px-8 {
                 padding-left: 2rem;
                 padding-right: 2rem
             }
         }
 
-        @media (prefers-color-scheme:dark) {
+        @media (prefers-color-scheme: dark) {
             .dark\:bg-gray-800 {
                 --tw-bg-opacity: 1;
                 background-color: rgb(31 41 55 / var(--tw-bg-opacity))
@@ -391,49 +395,62 @@
 </head>
 
 <body class="antialiased">
-    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-        @if (Route::has('login'))
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+></script>
+<div
+    class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+    @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-            <a href="{{ url('/logout') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Logout</a>
-            @else
-            <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
-            @if (Route::has('register'))
-            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-            @endif
+                <p>{{ Auth::user()->name }}</p>
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="text-sm text-gray-700 dark:text-gray-500 underline"
+                            style="cursor: pointer">
+                        Cerrar Sesión
+                    </button>
+                </form>
+
+            @else
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                @endif
             @endauth
         </div>
-        @endif
+    @endif
 
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                <h1>Anunzia OPENAI</h1>
-            </div>
+    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+        <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
+            <h1>Anunzia OPENAI</h1>
+        </div>
 
-            <!-- Sección para listar los dominios y su estado -->
-            <div class="mt-8">
-                @if(isset($dominios) && $dominios->count())
+        <!-- Sección para listar los dominios y su estado -->
+        <div class="mt-8">
+            @if(isset($dominios) && $dominios->count())
                 @foreach($dominios as $dominio)
-                <div class="mb-4 p-4 border rounded">
-                    <p><strong>Dominio:</strong> {{ $dominio->nombre_dominio }}</p>
-                    <p>
-                        <strong>Estado:</strong>
-                        @if($dominio->actiu)
-                        <span class="text-green-600">Activo</span>
-                        @else
-                        <span class="text-red-600">Inactivo</span>
-                        @endif
-                    </p>
-                    <hr>
-                </div>
+                    <div class="mb-4 p-4 border rounded">
+                        <p><strong>Dominio:</strong> {{ $dominio->nombre_dominio }}</p>
+                        <p>
+                            <strong>Estado:</strong>
+                            @if($dominio->actiu)
+                                <span class="text-success">Activo</span>
+                            @else
+                                <span class="text-danger">Inactivo</span>
+                            @endif
+                        </p>
+                        <hr>
+                    </div>
                 @endforeach
-                @else
+            @else
                 <p>No hay dominios disponibles.</p>
-                @endif
-            </div>
+            @endif
         </div>
     </div>
+</div>
 </body>
 
 </html>

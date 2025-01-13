@@ -3,6 +3,7 @@
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Auth\LoginController;
     use App\Http\Controllers\HomeController;
+    use App\Http\Controllers\LogoutController;
     use Illuminate\Support\Facades\Auth;
 
 
@@ -32,14 +33,14 @@
         ->name('dashboard');
 
     Route::get('/login', function () {
+        if (Auth::check()) {
+            return redirect('/dashboard');
+        }
+
+
         return view('auth.login');
     })->name('login');
 
-    Route::get('/logout', function () {
-        Auth::logout();
-        //request()->session()->invalidate();            // Invalida la sesión actual
-        //request()->session()->regenerateToken();       // Regenera el token CSRF
-        return redirect('/login');
-    });
+    Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
     Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
